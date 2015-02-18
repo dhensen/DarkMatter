@@ -4,41 +4,49 @@
 
 using namespace std;
 
-#define PI 3.14159265358979323846264338
-#define kpc 3.085678 * pow(10,16)
-#define G 6.6726 * pow(10,-11)
+#define PI  3.14159265358979323846264338
+#define kpc 3.085678E19
+#define pc  3.085678E16
+#define G   6.6726E-11
 
 
-
-float frequency(float speed,float distance)
+// in welke eenheid is speed
+// in welke eenheid is distance
+double frequency(double speed, double distance)
 {
-       return 1 / ((2 * PI * distance * kpc) / (speed * 3600));
+    // speed * 3600, snelheid keer seconden? dat is een afstand, klopt dat?
+    return 1 / ((2 * PI * distance * kpc) / (speed * 3600));
+
+    // 1 / (a/b)  == b/a, dus klopt deze bovenstaande formule wel?
 }
 
-float density(float frequency)
+double density(double frequency)
 {
-       return (3 * pow(frequency,2)) / G;
+       return (3 * pow(frequency, 2)) / G;
 }
 
 
 int main()
 {
-    float distance, speed;
-    
+    double distance, speed;
     
     FILE*fp;
-    fp = fopen("donkerematerie.txt","r");
-    
-    while (fscanf(fp,"%f%f\n", &distance,&speed) ==2)
+    fp = fopen("donkerematerie.txt", "r");
+
+    printf("%4.20f\n", PI);
+    printf("%4.20f\n", kpc);
+    printf("%4.20f\n", G);
+
+    while (fscanf(fp, "%lf%lf\n", &distance, &speed) == 2)
     {
-          printf("%f ", distance);
-          printf("%f ", speed);
-          printf("%f\n", density);
-    
-          }
-    fclose (fp);
+          printf("%f\t", distance);
+          printf("%f\t", speed);
+          printf("%4.34f\n", density(frequency(speed, distance)));
+    }
+    fclose(fp);
     
     cin.get();
     
     return 0;
-} 
+}
+
