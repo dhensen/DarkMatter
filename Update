@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+#define PI 3.14159265358979323846264338
+#define kpc 3.085678 * pow(10,16)
+#define G 6.6726 * pow(10,-11)
+
+
+
+float frequency(float speed,float distance)
+{
+       return 1 / ((2 * PI * distance * kpc) / (speed * 3600));
+}
+
+float density(float frequency)
+{
+       return (3 * pow(frequency,2)) / G;
+}
+
+
+int main()
+{
+    float distance, speed;
+    
+    
+    FILE*fp;
+    fp = fopen("donkerematerie.txt","r");
+    
+    while (fscanf(fp,"%f%f\n", &distance,&speed) ==2)
+    {
+          printf("%f ", distance);
+          printf("%f ", speed);
+          printf("%f\n", density);
+    
+          }
+    fclose (fp);
+    
+    cin.get();
+    
+    return 0;
+} 
